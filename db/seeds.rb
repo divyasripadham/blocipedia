@@ -1,7 +1,23 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+include RandomData
+
+member1 = User.create!(
+  email: 'member1@example.com',
+  password: 'helloworld',
+  username: 'member1'
+)
+
+member2 = User.create!(
+  email: 'member2@example.com',
+  password: 'helloworld',
+  username: 'member2'
+)
+
+users = User.all
+
+50.times do
+  Wiki.create!(
+    user: users.sample,
+    title: RandomData.random_sentence,
+    body: RandomData.random_paragraph
+  )
+end
