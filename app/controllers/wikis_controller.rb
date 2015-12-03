@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @wikis = Wiki.visible_to(current_user)
