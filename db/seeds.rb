@@ -14,9 +14,12 @@ member2 = User.create!(
 )
 
 10.times do
+  name = Faker::Name.name
+  username = Faker::Internet.user_name(name)
   User.create!(
-    email: Faker::Internet.email,
-    password: 'helloworld'
+    email: Faker::Internet.email(username),
+    password: 'helloworld',
+    username: username
   )
 end
 
