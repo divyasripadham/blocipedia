@@ -14,6 +14,7 @@ source 'https://rubygems.org'
 
  group :development, :test do
     gem 'rspec-rails', '~> 3.0'
+    gem 'faker', '0.3.1'
  end
 
  # Use SCSS for stylesheets
@@ -28,3 +29,5 @@ source 'https://rubygems.org'
  gem 'turbolinks'
 
  gem 'devise'
+
+ gem 'pundit'

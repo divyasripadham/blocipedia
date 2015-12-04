@@ -9,9 +9,8 @@
     <% @wikis.each do |wiki| %>
       <div class="media">
         <div class="media-body">
-          <h4 class="media-heading">
-            <%= link_to wiki.title, wiki %>
-          </h4>
+          <%= link_to wiki.title, wiki %>
+          <br>
           <small>
             <%= private_topic?(wiki) %> topic, Updated <%= time_ago_in_words(wiki.updated_at) %> ago, Created <%= time_ago_in_words(wiki.created_at) %> ago by <%= wiki.user.username %>
           </small>

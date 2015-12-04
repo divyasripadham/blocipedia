@@ -1,4 +1,5 @@
 include RandomData
+require 'faker'
 
 member1 = User.create!(
   email: 'member1@example.com',
@@ -11,6 +12,13 @@ member2 = User.create!(
   password: 'helloworld',
   username: 'member2'
 )
+
+10.times do
+  User.create!(
+    email: Faker::Internet.email,
+    password: 'helloworld'
+  )
+end
 
 users = User.all
 
