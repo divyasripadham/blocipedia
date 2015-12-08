@@ -2,10 +2,12 @@ Rails.application.routes.draw do
 
   resources :wikis
 
-  get 'users/show'
-
   devise_for :users
 
   root to: "home#index"
+
+  resources :charges, only: [:new, :create]
+
+  get 'users/show'
 
 end
