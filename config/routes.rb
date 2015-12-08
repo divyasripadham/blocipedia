@@ -10,4 +10,6 @@ Rails.application.routes.draw do
 
   get 'users/show'
 
+  post 'users/:user_id/downgrade' => 'users#user_downgrade', as: :user_downgrade
+
 end

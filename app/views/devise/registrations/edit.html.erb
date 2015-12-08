@@ -34,7 +34,7 @@
 
 <h3>Upgrade my account</h3>
 
-<p><%= button_to "Upgrade my account", new_charge_path, :method => :get %></p>
+<p><%= button_to "Upgrade my account", new_charge_path, :method => :get %><%= button_to "Downgrade my account", user_downgrade_path(current_user) %></p>
 
 <h3>Cancel my account</h3>
 
