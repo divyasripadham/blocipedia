@@ -1,4 +1,4 @@
-<h1>Wikis show</h1>
+<br>
 <div class="row">
   <% if user_authorized_to_edit_wikis? %>
     <div class="col-md-4">
@@ -14,12 +14,12 @@
 
       <div class="media">
         <div class="media-body">
-          <h4 class="media-heading">
+          <h2 class="media-heading">
             <%= @wiki.title %>
-          </h4>
-          <h5 class="media-heading">
-            <%= @wiki.body %>
-          </h5>
+          </h2>
+          <p class="media-heading">
+            <%= markdown(@wiki.body) %>
+          </p>
           <small>
             <%= private_topic?(@wiki) %> topic, Created <%= time_ago_in_words(@wiki.created_at) %> ago by <%= @wiki.user.username %>
           </small>
