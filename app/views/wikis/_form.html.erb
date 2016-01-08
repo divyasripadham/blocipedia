@@ -14,6 +14,12 @@
       <% end %>
      </div>
    <% end %>
+   <%= fields_for(@collaborators) do |cb| %>
+     <div class="form-group">
+      <%= cb.label "All Users" %><br/>
+      <%= collection_select(:users, :id, @all_users, :id, :username, {}, {:multiple => true}) %>
+     </div>
+   <% end %>
    <div class="form-group">
      <%= f.submit "Save", class: 'btn btn-success' %>
    </div>

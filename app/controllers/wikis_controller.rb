@@ -3,7 +3,7 @@ class WikisController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @wikis = Wiki.visible_to(current_user)
+    @wikis = policy_scope(Wiki)
   end
 
   def show
@@ -12,11 +12,19 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
+    @all_users = User.all
+    @collaborators = @wiki.collaborators.build
   end
 
   def create
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
+
+    params[:users][:id].each do |user|
+      if !user.empty?
+        @wiki.collaborators.build(:user_id => user)
+      end
+    end
 
     if @wiki.save
       redirect_to @wiki, notice: "Wiki was saved successfully."
@@ -28,11 +36,25 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    @all_users = User.all
+    @collaborators = @wiki.collaborators
+
+    # We need to remove current user from the list
+
+    # we need to iterate through the list and select all previous collaborators
+
   end
 
   def update
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
+
+    params[:users][:id].each do |user|
+      if !user.empty?
+        @wiki.collaborators.build(:user_id => user)
+        flash[:notice] = "user."
+      end
+    end
 
     if @wiki.save
        flash[:notice] = "wiki was updated."
