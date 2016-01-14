@@ -38,11 +38,6 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @all_users = User.all
     @collaborators = @wiki.collaborators
-
-    # We need to remove current user from the list
-
-    # we need to iterate through the list and select all previous collaborators
-
   end
 
   def update
@@ -50,14 +45,20 @@ class WikisController < ApplicationController
     @wiki.assign_attributes(wiki_params)
 
     params[:users][:id].each do |user|
-      if !user.empty?
+      if user.present?
         @wiki.collaborators.build(:user_id => user)
         flash[:notice] = "user."
       end
     end
 
+    params[:collabs][:id].reject {|id| id.empty?}.each do |collab_id|
+      collab = Collaborator.find(collab_id)
+      flash[:notice] = "#{collab.username} was deleted"
+      collab.delete
+    end
+
     if @wiki.save
-       flash[:notice] = "wiki was updated."
+       flash[:notice] = "wiki was updateddsfdfs."
        redirect_to [@wiki]
     else
        flash[:error] = "There was an error saving the wiki. Please try again."

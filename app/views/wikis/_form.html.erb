@@ -16,11 +16,15 @@
    <% end %>
    <%= fields_for(@collaborators) do |cb| %>
      <div class="form-group">
-      <%= cb.label "All Users" %><br/>
-      <%= collection_select(:users, :id, @all_users, :id, :username, {}, {:multiple => true}) %>
+       <%= cb.label "Select Collaborators to be removed" %><br/>
+       <%= collection_select(:collabs, :id, @wiki.collaborators, :id, :username, {}, {:multiple => true}) %>
+     </div>
+     <div class="form-group">
+       <%= cb.label "Select Users to be added as Collaborators" %><br/>
+       <%= collection_select(:users, :id, @wiki.list_of_users, :id, :username, {}, {:multiple => true}) %>
      </div>
    <% end %>
    <div class="form-group">
-     <%= f.submit "Save", class: 'btn btn-success' %>
+     <%= f.submit "Save Changes", class: 'btn btn-success' %>
    </div>
  <% end %>
