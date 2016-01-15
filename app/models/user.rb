@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   enum role: [:standard, :premium, :admin]
 
+  # before_save { self.username = email.downcase }
+
   def collaborator_for(wiki)
     collaborators.where(wiki_id: wiki.id).first
   end

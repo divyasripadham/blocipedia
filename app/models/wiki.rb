@@ -4,7 +4,7 @@ class Wiki < ActiveRecord::Base
   has_many :collaborators, dependent: :destroy
   validates :user, presence: true
 
-  default_scope { order('private DESC') }
+  default_scope { order(updated_at: :desc) }
   # scope :visible_to, -> (user) { (user.admin?) ? all : ((user.premium?) ? (where("user_id = ? OR private = ?",user.id,false)) : where(private: false)) }
 
   def list_of_users

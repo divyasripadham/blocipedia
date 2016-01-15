@@ -13,9 +13,11 @@ class WikiPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       elsif user.premium?
-        scope.where("user_id = ? OR private = ?",user.id,false)
+        # scope.where("user_id = ? OR private = ?",user.id,false)
+        scope.eager_load(:collaborators).where("collaborators.user_id = ? OR wikis.user_id = ? OR wikis.private = ?",user.id,user.id,false)
       else
-        scope.where(private: false)
+        # scope.where(private: false)
+        scope.eager_load(:collaborators).where("collaborators.user_id = ? OR wikis.private = ?",user.id,false)
       end
     end
   end

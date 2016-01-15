@@ -13,7 +13,9 @@ class WikisController < ApplicationController
   def new
     @wiki = Wiki.new
     @all_users = User.all
-    @collaborators = @wiki.collaborators.build
+    # @collaborators = @wiki.collaborators.build
+    # Made this change for the form_for in form.html. The 'if' check for the first select list.
+    @collaborators = Collaborator.none
   end
 
   def create

@@ -9,20 +9,22 @@
    </div>
    <% if current_user.admin? || current_user.premium? %>
      <div class="form-group">
-      <%= f.label :private, class: 'checkbox' do %>
-        <%= f.check_box :private %> Private wiki
-      <% end %>
+       <%= f.label :private, class: 'checkbox' do %>
+         <%= f.check_box :private %> Private wiki
+       <% end %>
      </div>
-   <% end %>
-   <%= fields_for(@collaborators) do |cb| %>
-     <div class="form-group">
-       <%= cb.label "Select Collaborators to be removed" %><br/>
-       <%= collection_select(:collabs, :id, @wiki.collaborators, :id, :username, {}, {:multiple => true}) %>
-     </div>
-     <div class="form-group">
-       <%= cb.label "Select Users to be added as Collaborators" %><br/>
-       <%= collection_select(:users, :id, @wiki.list_of_users, :id, :username, {}, {:multiple => true}) %>
-     </div>
+     <%= fields_for(@collaborators) do |cb| %>
+       <% if @wiki.collaborators.any? %>
+         <div class="form-group">
+           <%= cb.label "Select Collaborators to be removed" %><br/>
+           <%= collection_select(:collabs, :id, @wiki.collaborators, :id, :username, {}, {:multiple => true}) %>
+         </div>
+       <% end %>
+       <div class="form-group">
+         <%= cb.label "Select Users to be added as Collaborators" %><br/>
+         <%= collection_select(:users, :id, @wiki.list_of_users, :id, :username, {}, {:multiple => true}) %>
+       </div>
+     <% end %>
    <% end %>
    <div class="form-group">
      <%= f.submit "Save Changes", class: 'btn btn-success' %>
