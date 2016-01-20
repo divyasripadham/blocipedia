@@ -19,6 +19,7 @@ class WikisController < ApplicationController
   end
 
   def create
+    # raise
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
 
@@ -26,6 +27,10 @@ class WikisController < ApplicationController
       if !user.empty?
         @wiki.collaborators.build(:user_id => user)
       end
+    end
+
+    if @wiki.user.standard?
+      @wiki.private = false
     end
 
     if @wiki.save
@@ -43,6 +48,7 @@ class WikisController < ApplicationController
   end
 
   def update
+    # raise
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
 
@@ -53,10 +59,16 @@ class WikisController < ApplicationController
       end
     end
 
-    params[:collabs][:id].reject {|id| id.empty?}.each do |collab_id|
-      collab = Collaborator.find(collab_id)
-      flash[:notice] = "#{collab.username} was deleted"
-      collab.delete
+    if params[:collabs] && params[:collabs][:id]
+      params[:collabs][:id].reject {|id| id.empty?}.each do |collab_id|
+        collab = Collaborator.find(collab_id)
+        flash[:notice] = "#{collab.username} was deleted"
+        collab.delete
+      end
+    end
+
+    if @wiki.user.standard?
+      @wiki.private = false
     end
 
     if @wiki.save
@@ -69,6 +81,7 @@ class WikisController < ApplicationController
   end
 
   def destroy
+    @redirect_path = wiki_path
     @wiki = Wiki.find(params[:id])
     authorize @wiki
     if @wiki.destroy
@@ -76,7 +89,7 @@ class WikisController < ApplicationController
       redirect_to wikis_path
     else
       flash[:error] = "There was an error deleting the wiki."
-      render :show
+      redirect_to @redirect_path
     end
   end
 

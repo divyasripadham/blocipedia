@@ -1,15 +1,19 @@
 <br>
+<div class="row">&nbsp;</div>
 <div class="row">
   <% if user_authorized_to_edit_wikis? %>
-    <div class="col-md-4">
-      <%= link_to "Edit Wiki", edit_wiki_path, class: 'btn btn-success' %>
+    <div class="col-md-1">
+      <%= link_to "Edit Wiki", edit_wiki_path, class: 'btn btn-primary' %>
     </div>
   <% end %>
   <% if policy(@wiki).destroy? %>
-    <div class="col-md-4">
+    <div class="col-md-1">
       <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this wiki?' } %>
     </div>
   <% end %>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
   <div class="col-md-8">
       <div class="media">
         <div class="media-body">
@@ -24,16 +28,15 @@
           </small>
         </div>
       </div>
-  </div>
-  <div class="col-md-8">
-    <% @wiki.collaborators.each do |collab| %>
+
+     <% @wiki.collaborators.each do |collab| %>
       <div class="media">
         <div class="media-body">
           <small>
-            Collab <%= collab.username %>
+            Collaborators: <%= collab.username %>
           </small>
         </div>
       </div>
     <% end %>
-  </div>
+
 </div>

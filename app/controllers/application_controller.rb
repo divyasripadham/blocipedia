@@ -8,10 +8,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
   def user_not_authorized(exception)
-   flash[:error] = "You are not authorized to perform this action"
-   redirect_to(request.referrer || root_path)
+    flash[:error] = "You are not authorized to perform this action"
+  #  redirect_to(request.referrer || root_path)
+    if @redirect_path.present?
+      redirect_to @redirect_path
+    else
+      redirect_to root_path
+    end
   end
 
 end
