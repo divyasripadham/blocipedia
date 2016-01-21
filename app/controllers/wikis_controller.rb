@@ -52,10 +52,12 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
 
-    params[:users][:id].each do |user|
-      if user.present?
-        @wiki.collaborators.build(:user_id => user)
-        flash[:notice] = "user."
+    if params[:users] && params[:users][:id]
+      params[:users][:id].each do |user|
+        if user.present?
+          @wiki.collaborators.build(:user_id => user)
+          flash[:notice] = "user."
+        end
       end
     end
 
@@ -69,6 +71,10 @@ class WikisController < ApplicationController
 
     if @wiki.user.standard?
       @wiki.private = false
+    end
+
+    if !@wiki.private
+      @wiki.collaborators.clear
     end
 
     if @wiki.save

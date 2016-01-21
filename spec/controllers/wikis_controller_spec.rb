@@ -6,8 +6,10 @@ RSpec.describe WikisController, type: :controller do
 
   let(:my_user) { User.create!(email: 'testmember@example.com', password: 'helloworld', username: 'testmember') }
   let(:other_user) { User.create!(email: 'test2member@example.com', password: 'helloworld', username: 'test2member') }
+  let(:premium_user) { User.create!(email: 'test3member@example.com', password: 'helloworld', username: 'test3member', role: :premium) }
   let(:my_wiki) { Wiki.create!(title: 'My Wiki', body: 'Wiki body', user: my_user) }
-  let(:my_collaborator) { Collaborator.create!(wiki: my_wiki, user: other_user) }
+  let(:my_private_wiki) { Wiki.create!(title: 'My Private Wiki', body: 'Private Wiki body', private: true, user: premium_user) }
+  let(:my_collaborator) { Collaborator.create!(wiki: my_private_wiki, user: other_user) }
 
   context "guest" do
     describe "GET Index" do
@@ -82,8 +84,11 @@ RSpec.describe WikisController, type: :controller do
 
     describe "GET Index" do
       it "assigns Wiki.all to Wiki" do
+        my_wiki
+        my_private_wiki
         get :index
-        expect(assigns(:wikis)).to eq([my_wiki])
+        expect(assigns(:wikis)).to include(my_private_wiki)
+        expect(assigns(:wikis)).to include(my_wiki)
       end
     end
 
