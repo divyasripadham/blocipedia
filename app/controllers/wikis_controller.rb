@@ -33,6 +33,10 @@ class WikisController < ApplicationController
       @wiki.private = false
     end
 
+    if !@wiki.private
+      @wiki.collaborators.clear
+    end
+
     if @wiki.save
       redirect_to @wiki, notice: "Wiki was saved successfully."
     else
