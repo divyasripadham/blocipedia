@@ -82,15 +82,20 @@ RSpec.describe WikisController, type: :controller do
       sign_in other_user
     end
 
-    # describe "GET Index" do
-    #   it "assigns Wiki.all to Wiki" do
-    #     my_wiki
-    #     my_private_wiki
-    #     get :index
-    #     expect(assigns(:wikis)).to include(my_private_wiki)
-    #     expect(assigns(:wikis)).to include(my_wiki)
-    #   end
-    # end
+    describe "GET Index" do
+      it "assigns Wiki.all to Wiki" do
+        private_wiki = Wiki.create!( title: 'My Private Wiki', 
+                                     body: 'Private Wiki body', 
+                                     private: true, 
+                                     user: premium_user)
+                                     
+        Collaborator.create!(wiki: private_wiki, user: other_user)
+        
+        get :index
+        
+        expect(assigns(:wikis)).to include(private_wiki)
+      end
+    end
 
     describe "GET show" do
       it "assigns my_wiki to @wiki" do
