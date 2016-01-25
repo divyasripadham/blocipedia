@@ -23,9 +23,11 @@ class WikisController < ApplicationController
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
 
-    params[:users][:id].each do |user|
-      if !user.empty?
-        @wiki.collaborators.build(:user_id => user)
+    if params[:users] && params[:users][:id]
+      params[:users][:id].each do |user|
+        if !user.empty?
+          @wiki.collaborators.build(:user_id => user)
+        end
       end
     end
 

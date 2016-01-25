@@ -13,6 +13,13 @@ member2 = User.create!(
   username: 'member2'
 )
 
+member3 = User.create!(
+  email: 'member3@example.com',
+  password: 'helloworld',
+  username: 'member3',
+  role: 1
+)
+
 10.times do
   name = Faker::Name.name
   username = Faker::Internet.user_name(name)
