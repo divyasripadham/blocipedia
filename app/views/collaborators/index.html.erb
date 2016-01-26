@@ -1,0 +1,13 @@
+<div class="row">
+  <h1>Collaborators</h1>
+</div>
+<% @wiki.collaborators.each do |collab| %>
+ <div class="media">
+   <div class="col-md-2">
+     <%= collab.username %>
+   </div>
+   <div class="col-md-2">
+     <%= link_to "Delete", [@wiki, collab], method: :delete, data: { confirm: 'Are you sure you want to delete this collaborator?' } %>
+   </div>
+ </div>
+<% end %>
