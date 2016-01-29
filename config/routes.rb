@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
   resources :wikis do
-    resources :collaborators, only: [:create, :destroy, :index]
+    resources :collaborators do
+      get 'manage', :on => :collection
+    end
   end
 
   devise_for :users

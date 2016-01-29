@@ -7,4 +7,11 @@ class Collaborator < ActiveRecord::Base
       user.username
     end
   end
+
+  def email
+    if user.present?
+      user.email
+    end
+  end
+
 end
