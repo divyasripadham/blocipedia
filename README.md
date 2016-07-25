@@ -22,6 +22,3 @@ Gems used |
 [Faker](https://github.com/stympy/faker) to populate the database with fake seed data for testing. |
 [Redcarpet](https://github.com/vmg/redcarpet) to enable markdown syntax in wikis. |
 [Stripe](https://stripe.com/gb) payment integration to upgrade user accounts. |
-
-
-Made with the help of wonderful people at [bloc](http://bloc.io).
